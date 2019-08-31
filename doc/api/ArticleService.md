@@ -32,6 +32,7 @@ get-all
 {
     "entity_id": string,
     "name": string,
+    "priority": int
 }
 ```
 ##### Url
