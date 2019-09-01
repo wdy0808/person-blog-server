@@ -1,6 +1,7 @@
 package uuid
 
 import "github.com/google/uuid"
+import "github.com/wdy0808/person-blog-server/service/log"
 
 func NewRandomUuid() (newUuid string, err error) {
 	id, err := uuid.NewRandom()
@@ -9,7 +10,8 @@ func NewRandomUuid() (newUuid string, err error) {
 		id, err = uuid.NewRandom()
 		time++
 		if time >= retryTime {
-			return "", err
+			log.LogError.Printf("create random uuid exceed max retry time [%d], last error message [%s]", retryTime, err.Error())
+			panic("random uuid generation error")
 		}
 	}
 
