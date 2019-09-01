@@ -13,7 +13,7 @@ create table `t_article`(
 )
 
 create table `t_group`(
-    `id`: BIGINT NOT NULL,
+    `id`: TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name`: VARCHAR(20) NOT NULL,
     `priority`: INT NOT NULL,
     PRIMARY KEY(`id`),
