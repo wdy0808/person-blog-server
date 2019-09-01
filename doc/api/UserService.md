@@ -30,4 +30,26 @@ post
 /login
 ##### Method
 post
+### Signup
+```
+{
+    "username": string,
+    "password": string,
+}
+```
+##### Url
+/login
+##### Method
+post
+
+# Model
+## authorization
+JSON Web Tokens
+## Error Code
+
+| 1001 | username is not available |
+| --- | --- |
+| 1003 | Username has not been signed up |
+| 1004 | password wrong |
+
 
