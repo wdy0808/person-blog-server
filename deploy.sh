@@ -78,7 +78,8 @@ then
 fi
 
 function start {
-	go install
+	mv -u ./conf ${GOBIN}/../conf/${BUILD_PROJECT}
+	go install ldflags "-X github.com/wdy0808/person-blog-server/service/log._FILE_PATH=${GOBIN}/../log/${BUILD_PROJECT}/logfile -X github.com/wdy0808/person-blog-server/service/jason._FILE_PATH=${GOBIN}/../conf/${BUILD_PROJECT}/"
 	${GOBIN}/${BUILD_PROJECT} &
 }
 

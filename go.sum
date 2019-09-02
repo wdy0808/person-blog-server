@@ -1,2 +1,4 @@
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+gopkg.in/antonholmquist/jason.v1 v1.0.0 h1:8uYQ/VrXbz2wB2kEhgdcuwJ4EdAY0eJ0M3k6YvaLje4=
+gopkg.in/antonholmquist/jason.v1 v1.0.0/go.mod h1:M2y7bIWX6uLDdKZe2Tt8sQR80pMpVvMeMwfHE3s+i04=
