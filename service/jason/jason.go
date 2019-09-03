@@ -5,19 +5,20 @@ import "strings"
 import "path/filepath"
 import jason "gopkg.in/antonholmquist/jason.v1"
 import "github.com/wdy0808/person-blog-server/service/log"
+import "github.com/wdy0808/person-blog-server/service/file"
 
 type ConfigInformation struct {
 	object *jason.Object
 }
 
-var _FILE_PATH string
 var configMap map[string]*ConfigInformation
 
 const configFilePatern = "*.conf.json"
 
 func init() {
 	configMap = make(map[string]*ConfigInformation)
-	files, err := filepath.Glob(_FILE_PATH + configFilePatern)
+	configFilePath := file.CurrentDir() + "/conf/"
+	files, err := filepath.Glob(configFilePath + configFilePatern)
 
 	if nil != err {
 		log.LogError("try to get config file error [%s]\n", err.Error())
@@ -41,7 +42,7 @@ func init() {
 			panic("jason error")
 		}
 
-		configType := strings.TrimSuffix(file, strings.TrimPrefix(configFilePatern, "*"))
+		configType := strings.TrimPrefix(strings.TrimSuffix(file, strings.TrimPrefix(configFilePatern, "*")), configFilePath)
 		configMap[configType] = &ConfigInformation{object}
 	}
 	return
@@ -50,7 +51,7 @@ func init() {
 func GetConfigInformation(namespace string) (out *ConfigInformation) {
 	out, ifExist := configMap[namespace]
 	if !ifExist {
-		log.LogError("get config [%s] error [%s]\n", namespace, err.Error())
+		log.LogError("get config [%s] error\n", namespace)
 		panic("jason error")
 	}
 	return 

@@ -2,8 +2,8 @@ package log
 
 import "log"
 import "os"
+import "github.com/wdy0808/person-blog-server/service/file"
 
-var _FILE_PATH string
 var (
 	logInfo    *log.Logger
 	logWarning *log.Logger
@@ -11,10 +11,14 @@ var (
 )
 
 func init() {
-	err := os.Rename(_FILE_PATH, _FILE_PATH+".backup")
-	file, err := os.OpenFile(_FILE_PATH, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	currentDir := file.CurrentDir()
+	logFilePath := currentDir + "/log/logfile"
+	if file.FileExist(logFilePath) {
+		os.Rename(logFilePath, logFilePath + ".backup")
+	}
+	file, err := os.OpenFile(logFilePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("file open error : %v", err)
+		log.Fatalf("file open error : %v", err.Error())
 	}
 
 	logInfo = log.New(file, "[INFO] ", log.Ldate|log.Lmicroseconds)

@@ -78,13 +78,22 @@ then
 fi
 
 function start {
-	mv -u ./conf ${GOBIN}/../conf/${BUILD_PROJECT}
-	go install ldflags "-X github.com/wdy0808/person-blog-server/service/log._FILE_PATH=${GOBIN}/../log/${BUILD_PROJECT}/logfile -X github.com/wdy0808/person-blog-server/service/jason._FILE_PATH=${GOBIN}/../conf/${BUILD_PROJECT}/"
-	${GOBIN}/${BUILD_PROJECT} &
+	go install
+	if [ ! -d "${RUNPATH}/${BUILD_PROJECT}" ]
+	then
+		mkdir ${RUNPATH}/${BUILD_PROJECT}
+	fi
+	if [ ! -d "${RUNPATH}/${BUILD_PROJECT}/log" ]
+	then
+		mkdir ${RUNPATH}/${BUILD_PROJECT}/log
+	fi
+	mv -u ${GOBIN}/${BUILD_PROJECT} ${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT}
+	cp -R -u ${PROJECT_PATH}/${BUILD_PROJECT}/conf ${RUNPATH}/${BUILD_PROJECT}/conf
+	${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT} &
 }
 
 function stop {
-	pid=`ps -ef | grep "${GOBIN}/${BUILD_PROJECT}" | grep -v grep | awk '{print $2}'`
+	pid=`ps -ef | grep "${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT}" | grep -v grep | awk '{print $2}'`
 	kill -n 15 ${pid}
 }
 
