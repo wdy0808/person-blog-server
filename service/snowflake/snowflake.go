@@ -8,12 +8,12 @@ type SnowFlakeGenerator struct {
 	dataCenterId   int
 	machineId      int
 	lastTimeStamp  int64
-    sequenceNumber int
+	sequenceNumber int
 }
 
 func NewGenerator(dataCenterNumber, machineNumber int) (out *SnowFlakeGenerator) {
 	out = &SnowFlakeGenerator{dataCenterId: dataCenterNumber, machineId: machineNumber}
-	return 
+	return
 }
 
 func (this *SnowFlakeGenerator) NextId() (id uint64, err error) {
@@ -21,7 +21,7 @@ func (this *SnowFlakeGenerator) NextId() (id uint64, err error) {
 	if now == this.lastTimeStamp {
 		this.sequenceNumber++
 		if this.sequenceNumber > maxSequenceNumber {
-			log.LogError.Printf("snowflake has created [%d] id on timestamp [%d]", maxSequenceNumber, now)
+			log.LogError("snowflake has created [%d] id on timestamp [%d]", maxSequenceNumber, now)
 			return 0, errors.New("not id available now")
 		}
 	} else {
@@ -29,8 +29,8 @@ func (this *SnowFlakeGenerator) NextId() (id uint64, err error) {
 		this.sequenceNumber = 0
 	}
 
-	return (uint64(this.lastTimeStamp) << timestampShiftLeftBits & timestampBits) | 
-		(uint64(this.dataCenterId) << dataCenterShiftLeftBits & dataCenterBites) | 
+	return (uint64(this.lastTimeStamp) << timestampShiftLeftBits & timestampBits) |
+		(uint64(this.dataCenterId) << dataCenterShiftLeftBits & dataCenterBites) |
 		(uint64(this.machineId) << machineShiftLeftBits & machineBites) |
 		(uint64(this.sequenceNumber) & sequenceBits), nil
 }
