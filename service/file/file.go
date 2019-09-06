@@ -1,8 +1,10 @@
 package file
 
-import "path/filepath"
-import "os"
- 
+import (
+	"os"
+	"path/filepath"
+)
+
 func CurrentDir() (dir string) {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
@@ -13,8 +15,8 @@ func CurrentDir() (dir string) {
 
 func FileExist(file string) bool {
 	_, err := os.Stat(file)
-    if err != nil && os.IsNotExist(err) {  
-        return false  
-    }  
-    return true  
+	if err != nil && os.IsNotExist(err) {
+		return false
+	}
+	return true
 }

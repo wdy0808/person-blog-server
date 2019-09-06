@@ -1,18 +1,21 @@
 package snowflake
 
-import "time"
-import "errors"
-import "github.com/wdy0808/person-blog-server/service/log"
+import (
+	"errors"
+	"time"
+
+	"github.com/wdy0808/person-blog-server/service/log"
+)
 
 type SnowFlakeGenerator struct {
-	dataCenterId   int
-	machineId      int
+	dataCenterID   int
+	machineID      int
 	lastTimeStamp  int64
 	sequenceNumber int
 }
 
 func NewGenerator(dataCenterNumber, machineNumber int) (out *SnowFlakeGenerator) {
-	out = &SnowFlakeGenerator{dataCenterId: dataCenterNumber, machineId: machineNumber}
+	out = &SnowFlakeGenerator{dataCenterID: dataCenterNumber, machineID: machineNumber}
 	return
 }
 
@@ -30,7 +33,7 @@ func (this *SnowFlakeGenerator) NextId() (id uint64, err error) {
 	}
 
 	return (uint64(this.lastTimeStamp) << timestampShiftLeftBits & timestampBits) |
-		(uint64(this.dataCenterId) << dataCenterShiftLeftBits & dataCenterBites) |
-		(uint64(this.machineId) << machineShiftLeftBits & machineBites) |
+		(uint64(this.dataCenterID) << dataCenterShiftLeftBits & dataCenterBites) |
+		(uint64(this.machineID) << machineShiftLeftBits & machineBites) |
 		(uint64(this.sequenceNumber) & sequenceBits), nil
 }

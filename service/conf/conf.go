@@ -1,11 +1,14 @@
 package jason
 
-import "os"
-import "strings"
-import "path/filepath"
-import jason "gopkg.in/antonholmquist/jason.v1"
-import "github.com/wdy0808/person-blog-server/service/log"
-import "github.com/wdy0808/person-blog-server/service/file"
+import (
+	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/wdy0808/person-blog-server/service/file"
+	"github.com/wdy0808/person-blog-server/service/log"
+	jason "gopkg.in/antonholmquist/jason.v1"
+)
 
 type ConfigInformation struct {
 	object *jason.Object
@@ -42,10 +45,14 @@ func init() {
 			panic("jason error")
 		}
 
-		configType := strings.TrimPrefix(strings.TrimSuffix(file, strings.TrimPrefix(configFilePatern, "*")), configFilePath)
+		configType := getConfigType(file)
 		configMap[configType] = &ConfigInformation{object}
 	}
 	return
+}
+
+func getConfigType(configFilePath string) string {
+	return strings.TrimSuffix(filepath.Base(configFilePath), strings.TrimPrefix(configFilePatern, "*"))
 }
 
 func GetConfigInformation(namespace string) (out *ConfigInformation) {
@@ -54,7 +61,7 @@ func GetConfigInformation(namespace string) (out *ConfigInformation) {
 		log.LogError("get config [%s] error\n", namespace)
 		panic("jason error")
 	}
-	return 
+	return
 }
 
 func (this *ConfigInformation) MustObject(key string) *ConfigInformation {
