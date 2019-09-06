@@ -77,19 +77,32 @@ then
 	exit 0
 fi
 
+function mustMkdir {
+	if [ ! -d "${1}" ]
+	then
+		mkdir ${1}
+	fi
+}
+
+function storeDependencies {
+	mustMkdir ${RUNPATH}/${BUILD_PROJECT}/version
+	declare -a depencdencies
+	go list -m all | head -n 1 > ${RUNPATH}/${BUILD_PROJECT}/version/module
+	go list -m all | sed '1d' > ${RUNPATH}/${BUILD_PROJECT}/version/build_dependencies
+}
+
 function start {
 	go install
-	if [ ! -d "${RUNPATH}/${BUILD_PROJECT}" ]
-	then
-		mkdir ${RUNPATH}/${BUILD_PROJECT}
-	fi
-	if [ ! -d "${RUNPATH}/${BUILD_PROJECT}/log" ]
-	then
-		mkdir ${RUNPATH}/${BUILD_PROJECT}/log
+	mustMkdir ${RUNPATH}/${BUILD_PROJECT}
+	mustMkdir ${RUNPATH}/${BUILD_PROJECT}/log
+	if [ -f "${RUNPATH}/${BUILD_PROJECT}/log/logfile" ]
+	then 
+		mv ${RUNPATH}/${BUILD_PROJECT}/log/logfile ${RUNPATH}/${BUILD_PROJECT}/log/logfile.backup
 	fi
 	mv -f ${GOBIN}/${BUILD_PROJECT} ${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT}
 	cp -R -f ${PROJECT_PATH}/${BUILD_PROJECT}/conf ${RUNPATH}/${BUILD_PROJECT}/conf
-	${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT} &
+	${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT} & 2>${RUNPATH}/${BUILD_PROJECT}/log/logfile
+	storeDependencies
 }
 
 function stop {

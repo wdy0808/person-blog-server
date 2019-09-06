@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/wdy0808/person-blog-server/service/file"
-	"github.com/wdy0808/person-blog-server/service/log"
+	"github.com/wdy0808/go-common/file"
+	"github.com/wdy0808/go-common/log"
 	jason "gopkg.in/antonholmquist/jason.v1"
 )
 

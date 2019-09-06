@@ -1,4 +1,6 @@
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/wdy0808/go-common v0.0.0-20190906143712-5a92a332d88e h1:Pb5/DvNvSAIIDE4+w80m/8Fy2Ffu/15WSb9TGSjV03A=
+github.com/wdy0808/go-common v0.0.0-20190906143712-5a92a332d88e/go.mod h1:TTs5KbN/C5rUkrOr4Mml5lHyVK+dU4ogAAMmjgojVCA=
 gopkg.in/antonholmquist/jason.v1 v1.0.0 h1:8uYQ/VrXbz2wB2kEhgdcuwJ4EdAY0eJ0M3k6YvaLje4=
 gopkg.in/antonholmquist/jason.v1 v1.0.0/go.mod h1:M2y7bIWX6uLDdKZe2Tt8sQR80pMpVvMeMwfHE3s+i04=
