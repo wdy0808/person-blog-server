@@ -1,4 +1,4 @@
-package jason
+package conf
 
 import (
 	"os"
@@ -90,6 +90,15 @@ func (this *ConfigInformation) MustObjectArray(key string) (out []*ConfigInforma
 
 func (this *ConfigInformation) MustString(key string) (out string) {
 	out, err := this.object.GetString(key)
+	if nil != err {
+		log.LogError("config file get value [%s] error [%s]\n", key, err.Error())
+		panic("jason error")
+	}
+	return
+}
+
+func (this *ConfigInformation) MustStringArray(key string) (out []string) {
+	out, err := this.object.GetStringArray(key)
 	if nil != err {
 		log.LogError("config file get value [%s] error [%s]\n", key, err.Error())
 		panic("jason error")

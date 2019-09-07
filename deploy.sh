@@ -100,14 +100,17 @@ function start {
 		mv ${RUNPATH}/${BUILD_PROJECT}/log/logfile ${RUNPATH}/${BUILD_PROJECT}/log/logfile.backup
 	fi
 	mv -f ${GOBIN}/${BUILD_PROJECT} ${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT}
-	cp -R -f ${PROJECT_PATH}/${BUILD_PROJECT}/conf ${RUNPATH}/${BUILD_PROJECT}/conf
-	${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT} & 2>${RUNPATH}/${BUILD_PROJECT}/log/logfile
+	cp -R -f ${PROJECT_PATH}/${BUILD_PROJECT}/conf ${RUNPATH}/${BUILD_PROJECT}
+	${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT} 2>${RUNPATH}/${BUILD_PROJECT}/log/logfile &
 	storeDependencies
 }
 
 function stop {
 	pid=`ps -ef | grep "${RUNPATH}/${BUILD_PROJECT}/${BUILD_PROJECT}" | grep -v grep | awk '{print $2}'`
-	kill -n 15 ${pid}
+	if [ -n "${pid}" ]
+	then
+		kill -n 15 ${pid}
+	fi
 }
 
 function restart {
